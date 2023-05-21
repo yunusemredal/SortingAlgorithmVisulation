@@ -1,4 +1,4 @@
-from algorithms.bubbleSort import bubbleSort
+from src.algorithms.bubbleSorti import bubbleSort
 from algorithms.selectionSort import selectionSort
 from algorithms.quickSort import quickSort
 from algorithms.mergeSort import mergeSort
@@ -10,3 +10,4 @@ algorithmsDict = {
                   'merge'           : mergeSort,
                   'quick'           : quickSort,                  
                   'insertion'       : insertionSort,}
+

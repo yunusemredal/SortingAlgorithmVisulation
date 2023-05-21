@@ -1,51 +1,23 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from tkinter import *
 
-def drawRootGraph():
-    # Kök grafik için verileri oluşturun
-    x = np.linspace(0, 10, 100)
-    y = np.sqrt(x)
+def draw_bar_chart(normalized_data, colorArray, x_width, offset, spacing_bet_rect, canvas_height,canvas):
+    for i, height in enumerate(normalized_data):
+        x0 = i * x_width + offset + spacing_bet_rect
+        y0 = canvas_height - height * 400
+        x1 = (i + 1) * x_width
+        y1 = canvas_height
+        canvas.create_rectangle(x0, y0, x1, y1, fill=colorArray[i])
 
-    # Kök grafik oluşturun
-    plt.figure(figsize=(8, 6))
-    plt.plot(x, y)
+def draw_scatter_chart(normalized_data, colorArray, canvas_height, canvas_width,canvas,data):
+    x_points = np.linspace(0, canvas_width, len(data))
+    y_points = np.array(normalized_data) * canvas_height
+    for x, y, color in zip(x_points, y_points, colorArray):
+        canvas.create_oval(x - 2, canvas_height - y - 2, x + 2, canvas_height - y + 2, fill=color)
 
-    # Grafik özelliklerini ayarlayın
-    plt.xlabel('X Değeri')
-    plt.ylabel('Kök(X) Değeri')
-    plt.title('Kök Grafik')
-
-    # Grafikleri gösterin
-    plt.show()
-
-import tkinter as tk
-import math
-
-def drawRootGraph():
-    root = tk.Tk()
-    root.title("Kök Grafik")
-
-    canvas_width = 800
-    canvas_height = 600
-
-    canvas = tk.Canvas(root, width=canvas_width, height=canvas_height)
-    canvas.pack()
-
-    x_start = 0
-    x_end = 10
-    num_points = 100
-    dx = (x_end - x_start) / num_points
-
-    for i in range(num_points):
-        x = x_start + i * dx
-        y = math.sqrt(x)
-
-        x_pixel = canvas_width * (x - x_start) / (x_end - x_start)
-        y_pixel = canvas_height - canvas_height * (y / math.sqrt(x_end))
-
-        canvas.create_oval(x_pixel, y_pixel, x_pixel + 2, y_pixel + 2, fill="black")
-
-    root.mainloop()
-
-# Kök grafik fonksiyonunu çağırın
-drawRootGraph()
+def draw_stem_chart(colorArray, canvas_height, canvas_width,canvas,data,normalized_data):
+    x_points = np.linspace(0, canvas_width, len(data))
+    y_points = np.array(normalized_data) * canvas_height
+    for x, y, color in zip(x_points, y_points, colorArray):
+        canvas.create_line(x, canvas_height, x, canvas_height - y, fill=color)
